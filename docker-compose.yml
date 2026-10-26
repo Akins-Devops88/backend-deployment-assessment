@@ -1,0 +1,54 @@
+services:
+  mongodb:
+    image: mongo:8.0
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
+      MONGO_INITDB_DATABASE: much_todo_db
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - backend-network
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - >-
+          mongosh --quiet --username "$$MONGO_INITDB_ROOT_USERNAME"
+          --password "$$MONGO_INITDB_ROOT_PASSWORD"
+          --authenticationDatabase admin
+          --eval "db.adminCommand('ping').ok" | grep -q 1
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    environment:
+      PORT: "8080"
+      MONGO_URI: ${MONGO_URI}
+      DB_NAME: much_todo_db
+      JWT_SECRET_KEY: ${JWT_SECRET_KEY}
+      JWT_EXPIRATION_HOURS: "72"
+      ENABLE_CACHE: "false"
+      LOG_LEVEL: INFO
+      LOG_FORMAT: json
+      INTEGRATION: "false"
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    networks:
+      - backend-network
+
+volumes:
+  mongo_data:
+
+networks:
+  backend-network:
+    driver: bridge

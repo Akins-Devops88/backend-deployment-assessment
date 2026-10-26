@@ -1,0 +1,12 @@
+.git
+.gitignore
+.env
+.env.*
+!.env.example
+terraform/
+evidence/
+README.md
+*.pem
+*.key
+*.tfstate
+*.tfstate.*

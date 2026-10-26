@@ -1,0 +1,60 @@
+.env
+.env.*
+!.env.example
+**/.terraform/
+**/terraform.tfvars
+*.tfstate
+*.tfstate.*
+*.tfplan
+*.pem
+*.key
+
+# Terraform saved plans
+**/tfplan
+**/tfplan.*
+**/*.tfplan
+
+# Terraform crash logs
+**/crash.log
+**/crash.*.log
+
+# Local AWS credentials and SSH keys
+.aws/
+.ssh/
+
+# Environment variables and credentials
+.env
+.env.*
+!.env.example
+
+# Terraform local files and sensitive state
+**/.terraform/*
+*.tfstate
+*.tfstate.*
+*.tfvars
+!*.tfvars.example
+*.tfplan
+tfplan
+*state-backup*.json
+*.tf.backup
+
+# Terraform and application logs
+*.log
+
+# SSH private keys
+*.pem
+*.key
+id_rsa
+id_ed25519
+
+# Local backups
+*.backup
+*.bak
+
+# Operating system files
+.DS_Store
+
+# Editor files
+.vscode/
+.idea/
+internal/handlers/handlers_test.go.cp
