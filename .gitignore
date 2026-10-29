@@ -58,3 +58,11 @@ id_ed25519
 .vscode/
 .idea/
 internal/handlers/handlers_test.go.cp
+
+# Terraform variable snapshots and local backups
+*.tfvars.*
+!*.tfvars.example
+
+# Terraform variable snapshots and local backups
+*.tfvars.*
+!*.tfvars.example

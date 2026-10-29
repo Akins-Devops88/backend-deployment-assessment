@@ -24,6 +24,13 @@ resource "aws_security_group" "bastion" {
 }
 
 resource "aws_security_group" "alb" {
+  ingress {
+    description = "HTTPS from internet"
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
   name        = "${var.project_name}-alb-sg"
   description = "Application Load Balancer"
   vpc_id      = aws_vpc.main.id
